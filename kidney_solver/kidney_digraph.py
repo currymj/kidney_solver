@@ -84,6 +84,10 @@ class Digraph:
         source.edges.append(e)
         self.adj_mat[source.id][tgt.id] = e
     
+    def set_edge_weights_by_vertex_weights(self, vertex_weights_dict):
+        for edge in self.es:
+            edge.score = edge.score - 0.5 * (vertex_weights_dict[edge.src] + vertex_weights_dict[edge.tgt])
+            
     def find_cycles(self, max_length):
         """Find cycles of length up to max_length in the digraph.
 

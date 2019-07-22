@@ -11,6 +11,7 @@ import kidney_ip
 import kidney_utils
 import kidney_ndds
 
+import random
 def solve_kep(cfg, formulation, use_relabelled=True):
 
     formulations = {
@@ -78,6 +79,11 @@ def start():
 
     d = kidney_digraph.read_digraph(digraph_lines)
 
+    vertex_weight_dict = {}
+    for v in d.vs: 
+        vertex_weight_dict[v] = float(random.randint(1,5)) / 5.0
+    d.set_edge_weights_by_vertex_weights(vertex_weight_dict)
+
     if len(input_lines) > len(digraph_lines):
         ndd_lines = input_lines[n_digraph_edges + 2:]
         altruists = kidney_ndds.read_ndds(ndd_lines, d)
@@ -104,6 +110,9 @@ def start():
     print "solver_status: {}".format(opt_solution.ip_model.status)
     print "total_score: {}".format(opt_solution.total_score)
     opt_solution.display()
+
+
+
 
 if __name__=="__main__":
     start()
